@@ -4,6 +4,8 @@ class Map
 	{
 		this.w = 8;
 		this.h = 8;
+		this.height = 802;
+		this.width = 802;
 	}
 
 	draw()
@@ -15,7 +17,7 @@ class Map
 			{
 				noStroke();
 				c ? fill(0) : fill(255);
-				rect(width/this.w*i,height/this.h*j,width/this.w,height/this.h);
+				rect(this.width/this.w*i,this.height/this.h*j,this.width/this.w,this.height/this.h);
 				c=!c;
 			}
 			c=!c;
@@ -23,6 +25,6 @@ class Map
 		
 		noFill();
 		stroke(173, 255, 107);
-		rect(0,0,width-1,height-1);
+		rect(0,0,this.width-1,this.height-1);
 	}
 }
