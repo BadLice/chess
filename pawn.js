@@ -75,7 +75,7 @@ class Pawn
 							}
 						}
 
-						if(this.pathMatrix.length <= 0)
+						if(this.pathMatrix.length <= 0 && this.kingRip)
 							gameOver = true;
 					}
 				}
@@ -323,22 +323,24 @@ class Pawn
 	drawPath()
 	{
 
-		fill(this.pathColor);
-		stroke(0);
+		fill(51,51,51,150);
+		stroke(51, 51, 51);
+		strokeWeight(2)
 		for (var i = this.pathMatrix.length - 1; i >= 0; i--)
-			rect(getCellX(this.pathMatrix[i][0]),getCellY(this.pathMatrix[i][1]),getCellSize(),getCellSize());
+			ellipse(getCellX(this.pathMatrix[i][0])+getCellSize()/2,getCellY(this.pathMatrix[i][1])+getCellSize()/2,40,40);
 	}
 
 	draw()
 	{
 		if(!this.eaten)
 		{
-			noStroke();
+			stroke(0);
 			fill(this.col);
 			rect(getCellSize()/4+getCellX(this.x),getCellSize()/4+getCellY(this.y),getCellSize()/2,getCellSize()/2);
 
-			fill(255);
+			fill(this.col.levels[0]-255);
 			textSize(50)
+			noStroke();
 			text(this.charId,getCellSize()/4+getCellX(this.x),getCellSize()/4+getCellY(this.y),getCellSize()/2,getCellSize()/2);
 		}
 

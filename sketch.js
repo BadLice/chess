@@ -3,8 +3,8 @@ function setup()
 	createCanvas(1102,802);
 	mapx = new Map();
 
-	player1 = new Player(color(255,0,0),false);
-	player2 = new Player(color(0,0,255),true);
+	player1 = new Player(color(255),false);
+	player2 = new Player(color(0),true);
 
 	turn = true;
 	kingRip = false;
@@ -13,7 +13,8 @@ function setup()
 
 function draw()
 {
-	background(0);
+	drawBackground();
+	
 	mapx.draw();
 	
 	player1.draw();
@@ -22,7 +23,6 @@ function draw()
 	turn ? player1.move() : player2.move();
 
 	drawTurnLabel();
-
 }
 
 function getCellX(x)
@@ -65,31 +65,56 @@ function getItemAt(x,y)
 function drawTurnLabel()
 {
 	textSize(20);
+	stroke(0);
+	strokeWeight(1);
 
 	if(turn)
 	{
 		fill(player1.col)
-		text("Player 1 turn",900,30);
+		text("Player 1 turn",895,63);
 	}
 	else
 	{
 		fill(player2.col)
-		text("Player 2 turn",900,30);
+		text("Player 2 turn",895,63);
 	}
 
 	if(kingRip)
 	{
 		textSize(30);
-		fill(0,255,0);
-		text("Check mate",900,60);
+		fill(255, 210, 8);
+		text("Check mate",870,264);
 
 	}
 
 	if(gameOver)
 	{
-		fill(255);
+		fill(0);
 		textSize(30);
-		text((turn ? "Player 2" : "Player 1") + " Won!",900,150);
+		text((turn ? "Player 2" : "Player 1") + " Won!",860,166);
 	}
+
+}
+
+function drawBackground()
+{
+	background(60);
+
+	fill(245-60, 209-60, 66-60);
+	stroke(245, 209, 66);
+	strokeWeight(5)
+	rect(850,30,200,50);
+
+	fill(57+20, 87+20, 0+20);
+	stroke(57+80, 87+80, 0+80);
+	strokeWeight(5)
+	rect(825,130,250,50);
+
+	fill(255, 74, 104);
+	stroke(255-70, 74-70, 104-70);
+	strokeWeight(5)
+	rect(825,230,250,50); 	
+
+
 
 }

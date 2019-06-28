@@ -16,7 +16,7 @@ class Map
 			for (var j =8 - 1; j >= 0; j--)
 			{
 				noStroke();
-				c ? fill(0) : fill(255);
+				c ? fill(118, 150, 86) : fill(255, 248, 232);
 				rect(this.width/this.w*i,this.height/this.h*j,this.width/this.w,this.height/this.h);
 				c=!c;
 			}
@@ -24,7 +24,8 @@ class Map
 		}
 		
 		noFill();
-		stroke(173, 255, 107);
+		stroke(87, 60, 0);
+		strokeWeight(5);
 		rect(0,0,this.width-1,this.height-1);
 	}
 }
