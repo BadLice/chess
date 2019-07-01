@@ -9,7 +9,8 @@ function setup()
 	turn = true;
 	kingRip = false;
 	gameOver = false;
-}	
+	canPress = true;
+}
 
 function draw()
 {
@@ -49,13 +50,13 @@ function getItemAt(x,y)
 {
 	for (var i = player1.allItems.length - 1; i >= 0; i--)
 	{
-		if(player1.allItems[i].x === x && player1.allItems[i].y === y )
+		if(player1.allItems[i].x === x && player1.allItems[i].y === y && !player1.allItems[i].eaten)
 			return player1.allItems[i];
 	}
 
 	for (var i = player2.allItems.length - 1; i >= 0; i--)
 	{
-		if(player2.allItems[i].x === x && player2.allItems[i].y === y )
+		if(player2.allItems[i].x === x && player2.allItems[i].y === y && !player2.allItems[i].eaten)
 			return player2.allItems[i];
 	}
 
@@ -113,8 +114,12 @@ function drawBackground()
 	fill(255, 74, 104);
 	stroke(255-70, 74-70, 104-70);
 	strokeWeight(5)
-	rect(825,230,250,50); 	
+	rect(825,230,250,50);
+}
 
 
-
+function sleep(s) // in seconds
+{
+	var timex = millis();
+	while(millis()-timex < s*1000);
 }

@@ -54,33 +54,31 @@ class Pawn
 						var enemy = player1.col == this.col ? player2 : player1;
 
 						this.calcPath();
-
 						var otherPath = [];
 
 						for (var i = enemy.allItems.length - 1; i >= 0; i--)
 						{
 							enemy.allItems[i].calcPath();
-
 							otherPath = otherPath.concat(enemy.allItems[i].pathMatrix);
 						}
 
+						for (var i = this.pathMatrix.length - 1; i >= 0; i--) {
+						// console.log(this.pathMatrix[i])
+						}
+						// sleep(100)
+
 						for (var i = this.pathMatrix.length - 1; i >= 0; i--)
-						{
 							for (var j = otherPath.length - 1; j >= 0; j--)
-							{
 								if(otherPath[j] !== undefined && this.pathMatrix[i] !== undefined)
 									if(otherPath[j][0] === this.pathMatrix[i][0] && otherPath[j][1] === this.pathMatrix[i][1])
-										this.pathMatrix.splice(i,1);	
-										
-							}
-						}
+										if(!this.isOccupied(this.pathMatrix[i][0],this.pathMatrix[i][1]) && !this.canEat(this.pathMatrix[i][0],this.pathMatrix[i][1]))
+											this.pathMatrix.splice(i,1);										
 
 						if(this.pathMatrix.length <= 0 && this.kingRip)
 							gameOver = true;
 					}
 				}
 
-				
 				if(this.isInPath(getCellMouse()[0],getCellMouse()[1]) && mouseIsPressed)
 				{
 					this.x = getCellMouse()[0];
@@ -94,11 +92,10 @@ class Pawn
 					if(!kingRip)
 						this.checkKingRip();
 
-
 					turn = !turn;
+					sleep(0.2);
 				}
 			}
-			
 		}		
 	}
 
@@ -148,12 +145,16 @@ class Pawn
 					if(!this.canEat(this.x,posY))
 						break;
 
-				// rect(getCellX(this.x),getCellY(posY),getCellSize(),getCellSize());
 				this.pathMatrix.push([this.x,posY]);
 
 				if(this.isOccupied(this.x,posY))
+				{
 					if(this.canEat(this.x,posY))
+					{
+						this.pathMatrix[this.pathMatrix.length-1][2] = true;
 						break;
+					}
+				}	
 
 				
 			}
@@ -168,12 +169,16 @@ class Pawn
 					if(!this.canEat(this.x,posY))
 						break;
 
-				// rect(getCellX(this.x),getCellY(posY),getCellSize(),getCellSize());
 				this.pathMatrix.push([this.x,posY]);
 
 				if(this.isOccupied(this.x,posY))
+				{
 					if(this.canEat(this.x,posY))
+					{
+						this.pathMatrix[this.pathMatrix.length-1][2] = true;
 						break;
+					}
+				}	
 			}
 		}
 
@@ -185,14 +190,22 @@ class Pawn
 			{
 				if(this.isOccupied(posX,this.y))
 					if(!this.canEat(posX,this.y))
+					{
+						// if(kingRip)
+						// 	console.log("break",posX,this.y,this.canEat(posX,this.y),this.isOccupied(posX,this.y))
 						break;
+					}
 
-				// rect(getCellX(posX),getCellY(this.y),getCellSize(),getCellSize());
 				this.pathMatrix.push([posX,this.y]);
 
 				if(this.isOccupied(posX,this.y))
+				{
 					if(this.canEat(posX,this.y))
+					{
+						this.pathMatrix[this.pathMatrix.length-1][2] = true;
 						break;
+					}
+				}	
 			}
 		}
 
@@ -205,12 +218,16 @@ class Pawn
 					if(!this.canEat(posX,this.y))
 						break;
 
-				// rect(getCellX(posX),getCellY(this.y),getCellSize(),getCellSize());
 				this.pathMatrix.push([posX,this.y]);
 
 				if(this.isOccupied(posX,this.y))
+				{
 					if(this.canEat(posX,this.y))
+					{
+						this.pathMatrix[this.pathMatrix.length-1][2] = true;
 						break;
+					}
+				}	
 
 			}
 		}
@@ -228,13 +245,17 @@ class Pawn
 					if(this.isOccupied(posX,posY))
 						if(!this.canEat(posX,posY))
 							break;
-					
-					// rect(getCellX(posX),getCellY(posY),getCellSize(),getCellSize());
+
 					this.pathMatrix.push([posX,posY]);
 
 					if(this.isOccupied(posX,posY))
+					{
 						if(this.canEat(posX,posY))
+						{
+							this.pathMatrix[this.pathMatrix.length-1][2] = true;
 							break;
+						}
+					}	
 					
 				}
 			}
@@ -250,13 +271,17 @@ class Pawn
 					if(this.isOccupied(posX,posY))
 						if(!this.canEat(posX,posY))
 							break;
-					
-					// rect(getCellX(posX),getCellY(posY),getCellSize(),getCellSize());
+
 					this.pathMatrix.push([posX,posY]);
 
 					if(this.isOccupied(posX,posY))
+					{
 						if(this.canEat(posX,posY))
+						{
+							this.pathMatrix[this.pathMatrix.length-1][2] = true;
 							break;
+						}
+					}	
 				}
 			}
 
@@ -271,13 +296,17 @@ class Pawn
 					if(this.isOccupied(posX,posY))
 						if(!this.canEat(posX,posY))
 							break;
-					
-					// rect(getCellX(posX),getCellY(posY),getCellSize(),getCellSize());
+
 					this.pathMatrix.push([posX,posY]);
 
 					if(this.isOccupied(posX,posY))
+					{
 						if(this.canEat(posX,posY))
+						{
+							this.pathMatrix[this.pathMatrix.length-1][2] = true;
 							break;
+						}
+					}	
 				}
 			}
 
@@ -293,12 +322,16 @@ class Pawn
 						if(!this.canEat(posX,posY))
 							break;
 					
-					// rect(getCellX(posX),getCellY(posY),getCellSize(),getCellSize());
 					this.pathMatrix.push([posX,posY]);
 
 					if(this.isOccupied(posX,posY))
+					{
 						if(this.canEat(posX,posY))
+						{
+							this.pathMatrix[this.pathMatrix.length-1][2] = true;
 							break;
+						}
+					}	
 				}
 			}
 		}
@@ -313,8 +346,15 @@ class Pawn
 
 				if((posX) >= 0 && (posX) < mapx.w && (posY) >= 0 && (posY) < mapx.h && posX!==this.x && posY!==this.y && (this.isOccupied(posX,posY) ? this.canEat(posX,posY) : true) )
 				{
-					// rect(getCellX(posX),getCellY(posY),getCellSize(),getCellSize());
 					this.pathMatrix.push([posX,posY]);
+
+					if(this.isOccupied(posX,posY))
+					{
+						if(this.canEat(posX,posY))
+						{
+							this.pathMatrix[this.pathMatrix.length-1][2] = true;
+						}
+					}	
 				}
 			}
 		}
@@ -322,26 +362,47 @@ class Pawn
 
 	drawPath()
 	{
-
-		fill(51,51,51,150);
-		stroke(51, 51, 51);
-		strokeWeight(2)
 		for (var i = this.pathMatrix.length - 1; i >= 0; i--)
-			ellipse(getCellX(this.pathMatrix[i][0])+getCellSize()/2,getCellY(this.pathMatrix[i][1])+getCellSize()/2,40,40);
+		{
+			if(this.pathMatrix[i][2])
+			{
+				stroke(255,0,0);
+				strokeWeight(5);
+				noFill();
+				rect(getCellX(this.pathMatrix[i][0]),getCellY(this.pathMatrix[i][1]),getCellSize(),getCellSize());
+			}
+			else
+			{
+				fill(51,51,51,150);
+				stroke(51, 51, 51);
+				strokeWeight(2)
+				ellipse(getCellX(this.pathMatrix[i][0])+getCellSize()/2,getCellY(this.pathMatrix[i][1])+getCellSize()/2,40,40);
+			}
+		}
 	}
 
 	draw()
 	{
 		if(!this.eaten)
 		{
+			if(this.selected)
+			{
+				strokeWeight(5)
+				fill(112, 167, 255);
+				stroke(56, 132, 255);
+				rect(getCellX(this.x)+3,getCellY(this.y)+3,getCellSize()-5,getCellSize()-4);
+			}
+
 			stroke(0);
 			fill(this.col);
+			strokeWeight(2);
 			rect(getCellSize()/4+getCellX(this.x),getCellSize()/4+getCellY(this.y),getCellSize()/2,getCellSize()/2);
 
-			fill(this.col.levels[0]-255);
-			textSize(50)
+			fill(this.col.levels[0] == 0 ? 255 : 0);
+			textSize(50);
 			noStroke();
-			text(this.charId,getCellSize()/4+getCellX(this.x),getCellSize()/4+getCellY(this.y),getCellSize()/2,getCellSize()/2);
+			text(this.charId,getCellSize()/3+getCellX(this.x),getCellSize()/4+getCellY(this.y),getCellSize()/2,getCellSize()/2);
+		
 		}
 
 		if(this.selected)
@@ -373,13 +434,13 @@ class Pawn
 	{
 		for (var i =  player1.allItems.length - 1; i >= 0; i--)
 		{
-			if(player1.allItems[i].x == x && player1.allItems[i].y == y)
+			if(player1.allItems[i].x == x && player1.allItems[i].y == y && !player1.allItems[i].eaten)
 				return true;
 		}
 
 		for (var i =  player2.allItems.length - 1; i >= 0; i--)
 		{
-			if(player2.allItems[i].x == x && player2.allItems[i].y == y)
+			if(player2.allItems[i].x == x && player2.allItems[i].y == y && !player2.allItems[i].eaten)
 				return true;
 		}
 
@@ -390,6 +451,8 @@ class Pawn
 	{
 		var item = getItemAt(x,y);
 
+		// if(x==5 && y == 7)
+		// 	console.log(item)
 		if(item !== null)
 		{
 			//player 1 has moved
@@ -436,20 +499,11 @@ class Ped extends Pawn
 
 		if(this.isOccupied(this.x-1,posY))
 			if(this.canEat(this.x-1,posY))
-				this.pathMatrix.push([this.x-1,posY]);
+				this.pathMatrix.push([this.x-1,posY,true]);
 
 		if(this.isOccupied(this.x+1,posY))
 			if(this.canEat(this.x+1,posY))
-				this.pathMatrix.push([this.x+1,posY]);
-
-
-	}
-
-	drawPath()
-	{
-		
-
-		super.drawPath();
+				this.pathMatrix.push([this.x+1,posY,true]);
 	}
 }
 
